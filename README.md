@@ -1,3 +1,17 @@
 # backtrack-
 
-Tételek kiosztása a diákok között. A diákok elhelyezkedése véletlenszerû. A diákok illetve a tételek száma billetyúzetrõ megadandó.
+TÃ©telek kiosztÃ¡sa a diÃ¡kok kÃ¶zÃ¶tt. A diÃ¡kok elhelyezkedÃ©se vÃ©letlenszerÅ±. A diÃ¡kok illetve a tÃ©telek szÃ¡ma billetyÃºzetrÅ‘ megadandÃ³.
+
+1)
+Number of Students: 6
+Number of variants: 4
+Method: 1
+ 0 0 1 0 1 0
+ 0 0 0 1 0 1
+ 1 0 0 1 0 0
+ 0 1 1 0 0 1
+ 1 0 0 0 0 0
+ 0 1 0 1 0 0
+ 
+Solution: 1 1 2 3 2 2
+Number of comparisons: 6
