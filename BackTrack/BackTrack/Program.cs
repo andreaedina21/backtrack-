@@ -10,13 +10,68 @@ namespace BackTrack
     {
         static void Main(string[] args)
         {
-            int size = 5, variantNr = 3;
+            Console.WriteLine("Number of Students: ");
+            int size = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Number of variants: ");
+            int variantNr = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Which method do you want to use(possible values: 1,2,3)?");
+            int solutionType = Convert.ToInt32(Console.ReadLine());
             int[][] matrix = CreateMatrix(size);
             PrintMatrix(matrix);
-            SearchSolution(matrix, variantNr);
+            switch (solutionType)
+            {
+                case 1:
+                    SearchSolution(matrix, variantNr);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
             List<Student> students = CreateStudents(matrix, variantNr);
+            int index = MVR(students);
             Console.ReadKey();
         }
+
+        /*private static bool ChooseVariants(List<Student> students, )
+        {
+
+        }*/
+
+        private static bool IsSafe(List<Student> students, int index, int variant)
+        {
+            foreach (int neighbour in students[index].Neighbours)
+            {
+                if (students[neighbour].SelectedVariant == variant)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static List<Student> ForwardChecking(List<Student> students, int index, int variant)
+        {
+            for (int i = 0; i < students[index].Neighbours.Count; i++)
+            {
+                students[students[index].Neighbours[i]].Variants.Remove(variant);
+            }
+            return students;
+        }
+
+        private static int MVR(List<Student> students)
+        {
+            int index = 0, minVariants = students[0].Variants.Count;
+            foreach (Student student in students)
+            {
+                if (student.Variants.Count < minVariants)
+                {
+                    minVariants = student.Variants.Count;
+                    index = students.IndexOf(student);
+                }
+            }
+            return index;
+        } 
 
         private static List<Student> CreateStudents(int[][] matrix, int variantNr)
         {
