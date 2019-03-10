@@ -209,6 +209,7 @@ namespace BackTrack
                 if (IsSafe(index, matrix, variants, i))
                 {
                     variants[index] = i;
+                    variants[variants.Length - 1] += 1;
                     if (ChooseVariants(matrix, variantNr, variants, index + 1))
                     {
                         return true;
@@ -221,7 +222,8 @@ namespace BackTrack
 
         private static void SearchSolution(int[][] matrix, int variantNr)
         {
-            int[] variants = new int[matrix.Length];
+            int[] variants = new int[matrix.Length+1];
+            variants[variants.Length - 1] = 0;
             for (int i = 0; i < variantNr; i++)
             {
                 variants[i] = 0;
@@ -230,16 +232,22 @@ namespace BackTrack
             {
                 Console.WriteLine("No solution found!");
             }
-            Console.WriteLine("Solution: ");
-            PrintSolution(variants);
-            //Console.WriteLine("Number of comparisons: ");
+            else
+            {
+                Console.WriteLine("Solution: ");
+                PrintSolution(variants);
+                Console.WriteLine();
+                Console.Write("Number of comparisons: ");
+                Console.Write(variants[variants.Length - 1]);
+            }
         }
 
         private static void PrintSolution(int[] variants)
         {
-            foreach (var item in variants)
+            for (int i = 0; i < variants.Length - 1; i++)
             {
-                Console.WriteLine(item);
+                Console.Write(variants[i]);
+                Console.Write(" ");
             }
         }
     }
