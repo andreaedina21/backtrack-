@@ -14,7 +14,38 @@ namespace BackTrack
             int[][] matrix = CreateMatrix(size);
             PrintMatrix(matrix);
             SearchSolution(matrix, variantNr);
+            List<Student> students = CreateStudents(matrix, variantNr);
             Console.ReadKey();
+        }
+
+        private static List<Student> CreateStudents(int[][] matrix, int variantNr)
+        {
+            List<Student> students = new List<Student>(matrix.Length);
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                Student student = new Student();
+                List<int> neighbours = new List<int>();
+                for (int j = 0; j < matrix.Length; j++)
+                {
+                    if (matrix[i][j] == 1)
+                    {
+                        neighbours.Add(j);
+                    }
+                }
+                student.Neighbours = neighbours;
+                students.Add(student);
+            }
+            List<int> variants = new List<int>(variantNr);
+            for (int i = 1; i <= variantNr; i++)
+            {
+                variants.Add(i);
+            }
+            foreach (var student in students)
+            {
+                student.Variants = variants;
+                student.SelectedVariant = 0;
+            }
+            return students;
         }
 
         private static void PrintMatrix(int[][] matrix)
