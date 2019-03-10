@@ -17,6 +17,7 @@ namespace BackTrack
             Console.WriteLine("Which method do you want to use(possible values: 1,2,3)?");
             int solutionType = Convert.ToInt32(Console.ReadLine());
             int[][] matrix = CreateMatrix(size);
+            List<Student> students = CreateStudents(matrix, variantNr);
             PrintMatrix(matrix);
             switch (solutionType)
             {
@@ -24,19 +25,56 @@ namespace BackTrack
                     SearchSolution(matrix, variantNr);
                     break;
                 case 2:
+                    Console.WriteLine(ChooseVariants(students));
                     break;
                 case 3:
                     break;
             }
-            List<Student> students = CreateStudents(matrix, variantNr);
-            int index = MVR(students);
             Console.ReadKey();
         }
 
-        /*private static bool ChooseVariants(List<Student> students, )
+        private static bool ChooseVariants(List<Student> students)
         {
+            if (IsSolution(students))
+            {
+                return true;
+            }
+            int index = MVR(students);
+            for (int i = 0; i < students[index].Variants.Count; i++)
+            {
+                if (IsSafe(students, index, students[index].Variants[i]))
+                {
+                    var studentsTemp = students.ToList();
+                    students[index].SelectedVariant = students[index].Variants[i];
+                    students = ForwardChecking(students, index, students[index].SelectedVariant);
+                    if (ChooseVariants(students))
+                    {
+                        return true;
+                    }
+                    students = studentsTemp;
+                }
+            }
+            return false;
+        }
 
-        }*/
+        private static bool IsSolution(List<Student> students)
+        {
+            foreach (Student student in students)
+            {
+                if (student.SelectedVariant == 0)
+                {
+                    return false;
+                }
+            }
+            foreach (int index in students[students.Count - 1].Neighbours)
+            {
+                if (students[students.Count - 1].SelectedVariant == students[index].SelectedVariant)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         private static bool IsSafe(List<Student> students, int index, int variant)
         {
@@ -194,6 +232,7 @@ namespace BackTrack
             }
             Console.WriteLine("Solution: ");
             PrintSolution(variants);
+            //Console.WriteLine("Number of comparisons: ");
         }
 
         private static void PrintSolution(int[] variants)
