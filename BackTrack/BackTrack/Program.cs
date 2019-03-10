@@ -25,7 +25,9 @@ namespace BackTrack
                     SearchSolution(matrix, variantNr);
                     break;
                 case 2:
-                    Console.WriteLine(ChooseVariants(students));
+                    Console.WriteLine();
+                    Console.Write("Is solution: ");
+                    Console.Write(ChooseVariants(students));
                     break;
                 case 3:
                     break;
@@ -237,7 +239,7 @@ namespace BackTrack
                 Console.WriteLine("Solution: ");
                 PrintSolution(variants);
                 Console.WriteLine();
-                Console.Write("Number of comparisons: ");
+                Console.Write("Number of initializations: ");
                 Console.Write(variants[variants.Length - 1]);
             }
         }
